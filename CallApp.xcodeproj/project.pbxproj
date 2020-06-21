@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA17020B249F6E0300E36506 /* RTCIceCandidateJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA17020A249F6E0300E36506 /* RTCIceCandidateJSON.swift */; };
+		AA17020D249F6E2C00E36506 /* RTCSessionDescriptionJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA17020C249F6E2C00E36506 /* RTCSessionDescriptionJSON.swift */; };
 		AA373A72249D2B76003504E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA373A71249D2B76003504E3 /* AppDelegate.swift */; };
 		AA373A74249D2B76003504E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA373A73249D2B76003504E3 /* SceneDelegate.swift */; };
 		AA373A76249D2B76003504E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA373A75249D2B76003504E3 /* ViewController.swift */; };
 		AA373A79249D2B76003504E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA373A77249D2B76003504E3 /* Main.storyboard */; };
 		AA373A7B249D2B76003504E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA373A7A249D2B76003504E3 /* Assets.xcassets */; };
 		AA373A7E249D2B76003504E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA373A7C249D2B76003504E3 /* LaunchScreen.storyboard */; };
-		AA373A93249D2C86003504E3 /* RTCSessionDescription+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AA373A8F249D2C86003504E3 /* RTCSessionDescription+JSON.m */; };
-		AA373A94249D2C86003504E3 /* RTCICECandidate+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AA373A90249D2C86003504E3 /* RTCICECandidate+JSON.m */; };
 		AA373A95249D2C86003504E3 /* WebRTCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA373A91249D2C86003504E3 /* WebRTCManager.swift */; };
 		AA373A98249D35B5003504E3 /* SocketChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA373A96249D35B5003504E3 /* SocketChatManager.swift */; };
 		AA373A99249D35B5003504E3 /* SocketHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA373A97249D35B5003504E3 /* SocketHelper.swift */; };
@@ -27,6 +27,8 @@
 /* Begin PBXFileReference section */
 		0102DF8AB9433EDD4378BB58 /* Pods-CallApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CallApp.release.xcconfig"; path = "Target Support Files/Pods-CallApp/Pods-CallApp.release.xcconfig"; sourceTree = "<group>"; };
 		2DBDECE28BE18D6689DE1BB8 /* Pods_CallApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CallApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA17020A249F6E0300E36506 /* RTCIceCandidateJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTCIceCandidateJSON.swift; sourceTree = "<group>"; };
+		AA17020C249F6E2C00E36506 /* RTCSessionDescriptionJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCSessionDescriptionJSON.swift; sourceTree = "<group>"; };
 		AA373A6E249D2B76003504E3 /* CallApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CallApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA373A71249D2B76003504E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA373A73249D2B76003504E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,10 +38,6 @@
 		AA373A7D249D2B76003504E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA373A7F249D2B76003504E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA373A85249D2C2E003504E3 /* CallApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CallApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		AA373A8D249D2C86003504E3 /* RTCSessionDescription+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCSessionDescription+JSON.h"; sourceTree = "<group>"; };
-		AA373A8E249D2C86003504E3 /* RTCICECandidate+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCICECandidate+JSON.h"; sourceTree = "<group>"; };
-		AA373A8F249D2C86003504E3 /* RTCSessionDescription+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RTCSessionDescription+JSON.m"; sourceTree = "<group>"; };
-		AA373A90249D2C86003504E3 /* RTCICECandidate+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RTCICECandidate+JSON.m"; sourceTree = "<group>"; };
 		AA373A91249D2C86003504E3 /* WebRTCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCManager.swift; sourceTree = "<group>"; };
 		AA373A96249D35B5003504E3 /* SocketChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketChatManager.swift; sourceTree = "<group>"; };
 		AA373A97249D35B5003504E3 /* SocketHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketHelper.swift; sourceTree = "<group>"; };
@@ -76,6 +74,15 @@
 				2DBDECE28BE18D6689DE1BB8 /* Pods_CallApp.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA170209249F6DE900E36506 /* WebrtcHelperExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				AA17020A249F6E0300E36506 /* RTCIceCandidateJSON.swift */,
+				AA17020C249F6E2C00E36506 /* RTCSessionDescriptionJSON.swift */,
+			);
+			path = WebrtcHelperExtensions;
 			sourceTree = "<group>";
 		};
 		AA373A65249D2B76003504E3 = {
@@ -126,23 +133,12 @@
 		AA373A8B249D2C86003504E3 /* Webrtc */ = {
 			isa = PBXGroup;
 			children = (
-				AA373A8C249D2C86003504E3 /* Categories */,
-				AA373A91249D2C86003504E3 /* WebRTCManager.swift */,
+				AA170209249F6DE900E36506 /* WebrtcHelperExtensions */,
 				AA373A9E249D4B59003504E3 /* PreviewView.swift */,
 				AA74BB9B249E7B1A009F27E8 /* VideoCapturer.swift */,
+				AA373A91249D2C86003504E3 /* WebRTCManager.swift */,
 			);
 			path = Webrtc;
-			sourceTree = "<group>";
-		};
-		AA373A8C249D2C86003504E3 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				AA373A8D249D2C86003504E3 /* RTCSessionDescription+JSON.h */,
-				AA373A8E249D2C86003504E3 /* RTCICECandidate+JSON.h */,
-				AA373A8F249D2C86003504E3 /* RTCSessionDescription+JSON.m */,
-				AA373A90249D2C86003504E3 /* RTCICECandidate+JSON.m */,
-			);
-			path = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,13 +258,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA373A76249D2B76003504E3 /* ViewController.swift in Sources */,
-				AA373A93249D2C86003504E3 /* RTCSessionDescription+JSON.m in Sources */,
 				AA373A98249D35B5003504E3 /* SocketChatManager.swift in Sources */,
-				AA373A94249D2C86003504E3 /* RTCICECandidate+JSON.m in Sources */,
 				AA373A95249D2C86003504E3 /* WebRTCManager.swift in Sources */,
 				AA373A9F249D4B59003504E3 /* PreviewView.swift in Sources */,
 				AA373A72249D2B76003504E3 /* AppDelegate.swift in Sources */,
+				AA17020B249F6E0300E36506 /* RTCIceCandidateJSON.swift in Sources */,
 				AA74BB9C249E7B1A009F27E8 /* VideoCapturer.swift in Sources */,
+				AA17020D249F6E2C00E36506 /* RTCSessionDescriptionJSON.swift in Sources */,
 				AA373A99249D35B5003504E3 /* SocketHelper.swift in Sources */,
 				AA373A74249D2B76003504E3 /* SceneDelegate.swift in Sources */,
 				AA373A9B249D3943003504E3 /* SocketCallManager.swift in Sources */,

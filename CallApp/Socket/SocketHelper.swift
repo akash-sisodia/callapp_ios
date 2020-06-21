@@ -18,7 +18,7 @@ class SocketHelper {
     var callbackRegisterOnEvents: (()->Void)?
     var state: SocketIOStatus = .disconnected
     
-    let socketUrl = "http://172.20.10.3:3000/"
+    let socketUrl = "http://192.168.43.12:3000/"
     
     static let shared: SocketHelper = {
         let instance = SocketHelper()

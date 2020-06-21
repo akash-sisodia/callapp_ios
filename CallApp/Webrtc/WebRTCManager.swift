@@ -34,21 +34,21 @@ public class WebRTCManager: NSObject {
     var capturer: RTCVideoCapturer?
     
     var videoSource: RTCVideoSource?
-
+    
     var videoTrack: RTCVideoTrack?
     
     var audioSource: RTCAudioSource?
-
+    
     var audioTrack: RTCAudioTrack?
-
+    
     var delegate: WebRTCManagerDelegate?
     
     var remoteTrackHandler: ((RTCVideoTrack) -> ())?
     
     var remoteViedoTrack: RTCVideoTrack?
-   
+    
     var remoteAudioTrack: RTCAudioTrack?
-
+    
     func setDelegate(delegate: WebRTCManagerDelegate){
         self.delegate = delegate
     }
@@ -64,10 +64,10 @@ public class WebRTCManager: NSObject {
             peerConnectionFactory = RTCPeerConnectionFactory(encoderFactory: encoderFactory, decoderFactory: decoderFactory)
             
             ///
-//            let videoSource = peerConnectionFactory.videoSource()
-//            capturer = RTCVideoCapturer(delegate: videoSource)
-//            videoTrack = peerConnectionFactory.videoTrack(with: videoSource, trackId: "video0")
-//            self.videoSource = videoSource
+            //            let videoSource = peerConnectionFactory.videoSource()
+            //            capturer = RTCVideoCapturer(delegate: videoSource)
+            //            videoTrack = peerConnectionFactory.videoTrack(with: videoSource, trackId: "video0")
+            //            self.videoSource = videoSource
             
         }
         
@@ -85,18 +85,26 @@ public class WebRTCManager: NSObject {
                                                                   constraints: connectionConstraints,
                                                                   delegate: self)
         
-       // peerConnection.add(videoTrack!, streamIds: ["vsender0"])
+        // peerConnection.add(videoTrack!, streamIds: ["vsender0"])
+        
+        
+        let audioConstraints = RTCMediaConstraints(mandatoryConstraints: nil,
+                                                   optionalConstraints: ["levelControl": "false"])
         
         
         let videoSendSource = peerConnectionFactory.videoSource()
         let externalCapturer = VideoCapturer(delegate: videoSendSource)
         let videoTrackSend = peerConnectionFactory.videoTrack(with: videoSendSource, trackId: "video_0u1")
         peerConnection.add(videoTrackSend, streamIds: ["stream_video_0u1"])
-
+        
+        let audioSendSource = peerConnectionFactory.audioSource(with: audioConstraints)
+        let audioTrackSend = peerConnectionFactory.audioTrack(with: audioSendSource, trackId: "asender0")
+        peerConnection.add(audioTrackSend, streamIds: ["stream_asender0"])
+        
         connection = peerConnection
         
         self.delegate?.manager(self, didCreate: externalCapturer)
-
+        
     }
     
     /// #4
@@ -107,7 +115,7 @@ public class WebRTCManager: NSObject {
         guard let connection = connection else { return }
         
         let constraints = offerConstraints(receiveVideo: true,
-                                           receiveAudio: false)
+                                           receiveAudio: true)
         
         connection.offer(for: constraints) { (sdp, error) in
             ///
@@ -137,8 +145,8 @@ public class WebRTCManager: NSObject {
         self.createPeerConnection()
         
         guard let connection = connection else { return }
-
-        connection.setRemoteDescription(RTCSessionDescription(fromJSONDictionary: offer)) { (error) in
+        
+        connection.setRemoteDescription(RTCSessionDescription(fromJSONDictionary: offer)!) { (error) in
             ///
             guard error == nil else {
                 print("error while setting remote sdp: ", error!)
@@ -146,7 +154,7 @@ public class WebRTCManager: NSObject {
             }
             
             let constraints = self.offerConstraints(receiveVideo: true,
-                                                    receiveAudio: false)
+                                                    receiveAudio: true)
             
             connection.answer(for: constraints) { (sdp, error) in
                 ///
@@ -176,7 +184,7 @@ public class WebRTCManager: NSObject {
         ///
         guard let connection = connection else { return }
         
-        connection.setRemoteDescription(RTCSessionDescription(fromJSONDictionary: answer)) { (error) in
+        connection.setRemoteDescription(RTCSessionDescription(fromJSONDictionary: answer)!) { (error) in
             ///
             guard error == nil else {
                 print("error while setting remote sdp: ", error!)
@@ -192,7 +200,7 @@ public class WebRTCManager: NSObject {
     /// #7 Send ICE
     func processICECandidate(_ iceCandidate: RTCIceCandidate) {
         ///
-        SocketCallManager.shared.sendICE(iceCandidate.json(), label: iceCandidate.sdpMLineIndex)
+        SocketCallManager.shared.sendICE(iceCandidate.json()!, label: iceCandidate.sdpMLineIndex)
     }
     
     /// #8 Receive ICE
@@ -200,7 +208,7 @@ public class WebRTCManager: NSObject {
         ///
         guard let connection = connection else { return }
         
-        connection.add(RTCIceCandidate(fromJSONDictionary: iceCandidate))
+        connection.add(RTCIceCandidate(fromJSONDictionary: iceCandidate)!)
     }
     
     /// #9 Send Frame
@@ -244,7 +252,7 @@ extension WebRTCManager: RTCPeerConnectionDelegate {
         print("remote stream added")
         
         if stream.audioTracks.count > 0 {
-          
+            
         }
         
         if stream.videoTracks.count > 0 {
@@ -310,4 +318,3 @@ extension WebRTCManager {
         return RTCMediaConstraints(mandatoryConstraints: constraints, optionalConstraints: nil)
     }
 }
-

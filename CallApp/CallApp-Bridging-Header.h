@@ -8,8 +8,6 @@
 #ifndef Header_h
 #define Header_h
 
-#import "RTCSessionDescription+JSON.h"
-#import "RTCICECandidate+JSON.h"
 #import <WebRTC/RTCEAGLVideoView.h>
 
 
