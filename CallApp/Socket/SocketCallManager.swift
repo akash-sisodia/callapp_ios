@@ -28,24 +28,28 @@ class SocketCallManager {
     var connectionStateHandler: ((SocketIOStatus)->Void)?
     var delegate: SocketClientDelegate?
     var opponentId: String?
-    
+    var roomId: String?
+
     static let shared: SocketCallManager = {
         let instance = SocketCallManager()
         return instance
     }()
     
-    func startCall(id: String,_ connectionHandler: @escaping ()->()) {
+    func startCall(roomId: String, _ connectionHandler: @escaping ()->()) {
+        
+        self.roomId = roomId
         
         SocketHelper.shared.callbackRegisterOnEvents = {
+            
             self.registerReceivingEvents()
         }
+        
         SocketHelper.shared.connect()
 
         SocketHelper.shared.connectionStateHandler = { state in
             
             switch state {
             case .connected:
-                
                 connectionHandler()
             default:
                 break
@@ -73,7 +77,7 @@ class SocketCallManager {
                 
                 /// #1 On new peer create offer
                 WebRTCManager.shared.createOffer { [unowned self] (sdp) in
-                    SocketHelper.shared.socket!.emit("send_offer", ["sdp": sdp,"room": "test@321", "socketId": self.opponentId!])
+                    SocketHelper.shared.socket!.emit("send_offer", ["sdp": sdp,"room": self.roomId!, "socketId": self.opponentId!])
                 }
             }
         }
@@ -88,7 +92,7 @@ class SocketCallManager {
                 if let sdp = packet["sdp"] as? HTTPParameters {
                     /// #2 Accept offer and generate answer
                     WebRTCManager.shared.createAnswer(offer: sdp) { [unowned self] (answerSdp) in
-                        SocketHelper.shared.socket!.emit("send_answer", ["sdp": answerSdp, "room": "test@321", "socketId": self.opponentId!])
+                        SocketHelper.shared.socket!.emit("send_answer", ["sdp": answerSdp, "room": self.roomId!, "socketId": self.opponentId!])
                     }
                 }
             }
@@ -125,23 +129,23 @@ class SocketCallManager {
         
         SocketHelper.shared.socket?.connect()
     }
-    
-  
 }
 
 extension SocketCallManager {
     
     func sendOffer(_ offer: [AnyHashable: Any]) {
-        SocketHelper.shared.socket!.emit("send_offer", ["sdp": offer, "room": "test@321", "socketId": self.opponentId!])
+        
+        SocketHelper.shared.socket!.emit("send_offer", ["sdp": offer, "room": self.roomId!, "socketId": self.opponentId!])
     }
     
     func sendAnswer(_ answer: [AnyHashable: Any]) {
-        SocketHelper.shared.socket!.emit("send_answer", ["sdp": answer, "room": "test@321", "socketId": self.opponentId!])
+        
+        SocketHelper.shared.socket!.emit("send_answer", ["sdp": answer, "room": self.roomId!, "socketId": self.opponentId!])
     }
     
     func sendICE(_ ice: [AnyHashable: Any], label: Int32) {
-        ///
-        SocketHelper.shared.socket!.emit("ice_candidate", ["room": "test@321", "socketId": self.opponentId!, "label": label, "candidate": ice])
+
+        SocketHelper.shared.socket!.emit("ice_candidate", ["room":self.roomId!, "socketId": self.opponentId!, "label": label, "candidate": ice])
     }
 }
 

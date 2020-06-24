@@ -22,25 +22,26 @@ class ViewController: UIViewController {
     private let session = AVCaptureSession()
     private let videoDataOutput = AVCaptureVideoDataOutput()
     private var isSessionRunning = false
-    private var selectedSemanticSegmentationMatteTypes = [AVSemanticSegmentationMatte.MatteType]()
     
     // Communicate with the session and other session objects on this queue.
     private let sessionQueue = DispatchQueue(label: "session queue")
     private let dataOutputQueue = DispatchQueue(label: "VideoDataQueue", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
     private var setupResult: SessionSetupResult = .success
     @objc dynamic var videoDeviceInput: AVCaptureDeviceInput!
-    private var spinner: UIActivityIndicatorView!
-    var windowOrientation: UIInterfaceOrientation {  return view.window?.windowScene?.interfaceOrientation ?? .unknown }
-
+    
     // Webtrc Views
     @IBOutlet weak var preview: PreviewView!
     @IBOutlet weak var viewRemoteVideo: RTCEAGLVideoView!
     var externalCapturer: VideoCapturer!
-
+    var roomId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        roomId = "122"
+        WebRTCManager.shared.setDelegate(delegate: self)
+        SocketCallManager.shared.startCall(roomId: roomId!) {
+            SocketCallManager.shared.emit(key: "join_room", data: ["room": self.roomId!])
+        }
         initialSetup()
     }
     
@@ -82,12 +83,6 @@ class ViewController: UIViewController {
         sessionQueue.async {
             self.configureSession()
         }
-        DispatchQueue.main.async {
-            self.spinner = UIActivityIndicatorView(style: .large)
-            self.spinner.color = UIColor.yellow
-            self.preview.addSubview(self.spinner)
-        }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -201,14 +196,6 @@ class ViewController: UIViewController {
                      Use the window scene's orientation as the initial video orientation. Subsequent orientation changes are
                      handled by CameraViewController.viewWillTransition(to:with:).
                      */
-                    var initialVideoOrientation: AVCaptureVideoOrientation = .portrait
-                    if self.windowOrientation != .unknown {
-                        if let videoOrientation = AVCaptureVideoOrientation(rawValue: self.windowOrientation.rawValue) {
-                            initialVideoOrientation = videoOrientation
-                        }
-                    }
-                    
-                    self.preview.videoPreviewLayer.connection?.videoOrientation = initialVideoOrientation
                 }
             } else {
                 print("Couldn't add video device input to the session.")
@@ -250,26 +237,6 @@ class ViewController: UIViewController {
         }
         
         session.commitConfiguration()
-    }
-    
-    @IBAction func btnConnect(_ sender: Any) {
-        WebRTCManager.shared.setDelegate(delegate: self)
-        SocketCallManager.shared.startCall(id: "1") {
-            SocketCallManager.shared.emit(key: "join_room", data: ["room": "test@321"])
-        }
-    }
-    
-    @IBAction func btnDisConnect(_ sender: Any) {
-        SocketHelper.shared.disconnect()
-    }
-    @IBAction func btnSendOffer(_ sender: Any) {
-        
-    }
-    @IBAction func btnAddStream(_ sender: Any) {
-        
-        if let remoteTrack = WebRTCManager.shared.remoteViedoTrack {
-            remoteTrack.add(self.viewRemoteVideo)
-        }
     }
 }
 
